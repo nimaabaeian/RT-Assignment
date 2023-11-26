@@ -1,0 +1,99 @@
+|-- [Initialize]
+|   |
+|   |-- Set ORIENTATION_THRESHOLD to 2.0
+|   |-- Set DISTANCE_THRESHOLD to 0.4
+|   |-- Create robot as new Robot instance
+|   |-- Create grabbed_boxes as an empty list
+|
+|-- [Function - drive(speed, seconds)]
+|   |-- Set robot motors to move forward with specified speed
+|   |-- Sleep for specified duration
+|   |-- Stop robot motors
+|
+|-- [Function - turn(speed, seconds)]
+|   |-- Set robot motors to turn with specified speed
+|   |-- Sleep for specified duration
+|   |-- Stop robot motors
+|
+|-- [Function - find_closest_marker(marker_type, condition_func)]
+|   |-- Initialize min_distance to 100
+|   |-- Loop through visible boxes
+|   |   |-- Check conditions and update min_distance if criteria met
+|   |-- Check if a marker was found
+|   |   |-- Return marker information
+|   |-- No marker found
+|   |   |-- Return default values
+|
+|-- [Function - find_closest_gold()]
+|   |-- Define condition function
+|   |-- Call find_closest_marker with MARKER_TOKEN_GOLD and condition function
+|
+|-- [Function - find_release_location()]
+|   |-- Define condition function
+|   |-- Call find_closest_marker with MARKER_TOKEN_GOLD and condition function
+|
+|-- [Function - grab_gold()]
+|   |-- Loop until a gold box is found within grabbing distance
+|   |   |-- Find the closest golden box
+|   |   |-- Check distance and orientation, take appropriate action
+|
+|-- [Function - release_grabbed_gold()]
+|   |-- Loop until a drop location is found within releasing distance
+|   |   |-- Find the closest release location
+|   |   |-- Check distance and orientation, take appropriate action
+|
+|-- [Main Algorithm - main()]
+|   |
+|   |-- [Search for Initial Golden Box]
+|   |   |-- Loop until a gold box is found
+|   |   |   |-- Print "Searching for a gold box..."
+|   |   |   |-- Call turn(-10, 1)
+|   |   |   |-- Find the closest golden box
+|   |   |   |-- Check distance and orientation, take appropriate action
+|   |   |
+|   |   |-- Call grab_gold()
+|   |   |-- Call robot.grab()
+|   |   |-- Print "Successfully grabbed the box."
+|   |   |
+|   |   |-- [Deliver Initial Box]
+|   |       |-- Call turn(-20, 0.7)
+|   |       |-- Call drive(20, 10)
+|   |       |-- Call robot.release()
+|   |       |-- Print "Package delivered."
+|   |       |
+|   |       |-- [Avoid Collisions]
+|   |           |-- Call drive(-15, 1.33)
+|   |           |-- Call turn(30, 2)
+|
+|-- [Repeat Until All Boxes Delivered]
+|   |
+|   |-- Loop until all boxes are delivered
+|   |   |
+|   |   |-- Call find_closest_gold()
+|   |   |-- Loop until a gold box is found
+|   |   |   |-- Print "Searching for a gold box..."
+|   |   |   |-- Call turn(-10, 1)
+|   |   |   |-- Find the closest golden box
+|   |   |   |-- Check distance and orientation, take appropriate action
+|   |   |
+|   |   |-- Call grab_gold()
+|   |   |-- Call robot.grab()
+|   |   |-- Print "Successfully grabbed the box."
+|   |   |
+|   |   |-- [Find Drop Location]
+|   |       |-- Call find_release_location()
+|   |       |-- Loop until a drop location is found
+|   |       |   |-- Print "Searching for a drop location..."
+|   |       |   |-- Call turn(10, 1)
+|   |       |   |-- Find the closest release location
+|   |       |   |-- Check distance and orientation, take appropriate action
+|   |       |
+|   |       |-- Call release_grabbed_gold()
+|   |       |-- Call robot.release()
+|   |       |-- Print "Package delivered."
+|   |       |-- Call drive(-15, 1.33)
+|   |       |-- Call turn(30, 2)
+|   |
+|   |-- Append code of the dropped box to grabbed_boxes
+
+|-- End
